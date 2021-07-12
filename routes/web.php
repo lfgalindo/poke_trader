@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome', [
-        'qttPlayers' => 3,
+        'qttPlayers' => 2,
         'maxPokeTrade' => 6,
         'fairTradeDiff' => 50
     ]);
