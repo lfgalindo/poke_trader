@@ -1,99 +1,90 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('template')    
 
-        <title>Poke Trader</title>
+@section('button-header')
+    <a href={{route('history')}} style="text-decoration: none;">
+        <button class="btn btn-success">Histórico de trocas</button>
+    </a>
+@endsection
 
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+@section('content')
+    <div class="row">
+        <div class="col-6">
+            <table class="table">
+                <thead>
+                    <tr><th colspan="2" style="text-align: center">Jogador 1</th></tr>
+                    <tr>
+                        <th>Pokemon</th>
+                        <th>XP</th>
+                    </tr>
+                </thead>
 
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    </head>
+                <tbody class="pokemons" id="player-1"></tbody>
 
-    <body>
-        <div class="container">
-            <div class="row">
-                <div class="col-6">
-                    <table class="table">
-                        <thead>
-                            <tr><th colspan="2" style="text-align: center">Jogador 1</th></tr>
-                            <tr>
-                                <th>Pokemon</th>
-                                <th>XP</th>
-                            </tr>
-                        </thead>
+                <tfoot>
+                    <tr>
+                        <th><span id="qtt-pokemons-player-1">0</span> Pokémon(s)</th>
+                        <th><span id="total-xp-player-1">0</span> XP</th>
+                    </tr>
 
-                        <tbody class="pokemons" id="player-1"></tbody>
-
-                        <tfoot>
-                            <tr>
-                                <th><span id="qtt-pokemons-player-1">0</span> Pokémon(s)</th>
-                                <th><span id="total-xp-player-1">0</span> XP</th>
-                            </tr>
-
-                            <tr>
-                                <td colspan="2" style="text-align: center">
-                                    <button class="btn btn-primary" onclick="searchPokeToAdd(1)">Adicionar pokémon</button>
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-
-                <div class="col-6">
-                    <table class="table">
-                        <thead>
-                            <tr><th colspan="2" style="text-align: center">Jogador 2</th></tr>
-                            <tr>
-                                <th>Pokemon</th>
-                                <th>XP</th>
-                            </tr>
-                        </thead>
-
-                        <tbody class="pokemons" id="player-2"></tbody>
-
-                        <tfoot>
-                            <tr>
-                                <th><span id="qtt-pokemons-player-2">0</span> Pokémon(s)</th>
-                                <th><span id="total-xp-player-2">0</span> XP</th>
-                            </tr>
-
-                            <tr>
-                                <td colspan="2" style="text-align: center">
-                                    <button class="btn btn-primary" onclick="searchPokeToAdd(2)">Adicionar pokémon</button>
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <table class="table">
-                        <tr>
-                            <th style="text-align: center">Situação da troca:</th>
-                        </tr>
-
-                        <tr>
-                            <td style="text-align: center">Essa troca é <span id="trade-status">JUSTA</span>, pois a diferença é de <span id="diff-xp">0</span> XP</td>
-                        </tr>
-
-                        <tr>
-                            <td style="text-align: center">
-                                <button class="btn btn-secondary" onclick="clearTrade()">Recomeçar</button>
-                                <button class="btn btn-primary" onclick="saveTrade()">Salvar troca e recomeçar</button>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
+                    <tr>
+                        <td colspan="2" style="text-align: center">
+                            <button class="btn btn-primary" onclick="searchPokeToAdd(1)">Adicionar pokémon</button>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
-    </body>
+
+        <div class="col-6">
+            <table class="table">
+                <thead>
+                    <tr><th colspan="2" style="text-align: center">Jogador 2</th></tr>
+                    <tr>
+                        <th>Pokemon</th>
+                        <th>XP</th>
+                    </tr>
+                </thead>
+
+                <tbody class="pokemons" id="player-2"></tbody>
+
+                <tfoot>
+                    <tr>
+                        <th><span id="qtt-pokemons-player-2">0</span> Pokémon(s)</th>
+                        <th><span id="total-xp-player-2">0</span> XP</th>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2" style="text-align: center">
+                            <button class="btn btn-primary" onclick="searchPokeToAdd(2)">Adicionar pokémon</button>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <table class="table">
+                <tr>
+                    <th style="text-align: center">Situação da troca:</th>
+                </tr>
+
+                <tr>
+                    <td style="text-align: center">Essa troca é <span id="trade-status">JUSTA</span>, pois a diferença é de <span id="diff-xp">0</span> XP</td>
+                </tr>
+
+                <tr>
+                    <td style="text-align: center">
+                        <button class="btn btn-secondary" onclick="clearTrade()">Recomeçar</button>
+                        <button class="btn btn-primary" onclick="saveTrade()">Salvar troca e recomeçar</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
 
     <script>
+        let routeStoreTrade = @json(route('store'));
         let fairTradeDiff = @json($fairTradeDiff);
         let players = {
             1: {
@@ -108,9 +99,55 @@
 
         function saveTrade ()
         {
-            alert('123');
+            if ((players[1].pokemons.length == 0) || (players[2].pokemons.length == 0)) {
+                Swal.fire(
+                    'Oops...',
+                    'Você precisa adicionar ao menos um pokémon para cada jogador antes de salvar!',
+                    'error'
+                );
 
-            clearTrade();
+                return;
+            }
+
+            Swal.fire({
+                icon: 'question',
+                title: 'Salvar troca',
+                text: 'Podemos salvar os dados desta troca?',
+                showCancelButton: true,
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Sim',
+                showLoaderOnConfirm: true,
+                reverseButtons: true,
+                backdrop: true,
+                preConfirm: () => {
+                    return fetch(routeStoreTrade, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                        },
+                        body: JSON.stringify(players),
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(json => {
+                                throw new Error(json.message)
+                            })
+                        }
+                        return response.json()
+                    })
+                    .catch(error => {
+                        Swal.showValidationMessage(error)
+                    })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire('Salvar troca', 'Troca salva com sucesso!', 'success');
+
+                    clearTrade();
+                }
+            });
         }
 
         
@@ -221,4 +258,4 @@
             $('#diff-xp').text(diff);
         }
     </script>
-</html>
+@endsection
